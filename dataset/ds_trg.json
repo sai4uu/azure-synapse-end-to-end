@@ -1,0 +1,20 @@
+{
+	"name": "ds_trg",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_src_gen2",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "revenue_star.json",
+				"folderPath": "output",
+				"fileSystem": "raw"
+			}
+		},
+		"schema": {}
+	}
+}
