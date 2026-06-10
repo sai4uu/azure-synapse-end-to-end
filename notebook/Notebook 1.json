@@ -18,63 +18,16 @@
 				"spark.dynamicAllocation.enabled": "false",
 				"spark.dynamicAllocation.minExecutors": "2",
 				"spark.dynamicAllocation.maxExecutors": "2",
-				"spark.autotune.trackingId": "78f43d2a-204a-4540-a5cc-466965570583"
+				"spark.autotune.trackingId": "90e19117-9279-470e-9e60-e3e44f18cdd1"
 			}
 		},
 		"metadata": {
 			"saveOutput": true,
-			"synapse_widget": {
-				"version": "0.1",
-				"state": {
-					"b3a625b8-8149-427b-82e0-d1f38050a03e": {
-						"type": "Synapse.DataFrame",
-						"sync_state": {
-							"table": {
-								"rows": [
-									{
-										"0": {
-											"_FileInfo__j_file_info": null
-										}
-									},
-									{
-										"0": {
-											"_FileInfo__j_file_info": null
-										}
-									}
-								],
-								"schema": [
-									{
-										"key": "0",
-										"name": "0",
-										"type": "string"
-									}
-								],
-								"truncated": false
-							},
-							"isSummary": false,
-							"language": "python",
-							"wranglerEntryContext": null
-						},
-						"persist_state": {
-							"view": {
-								"type": "details",
-								"chartOptions": {
-									"chartType": "bar",
-									"aggregationType": "count",
-									"categoryFieldKeys": [
-										"0"
-									],
-									"seriesFieldKeys": [
-										"0"
-									],
-									"isStacked": false
-								}
-							}
-						}
-					}
-				}
-			},
 			"enableDebugMode": false,
+			"kernelspec": {
+				"name": "synapse_pyspark",
+				"display_name": "Synapse PySpark"
+			},
 			"language_info": {
 				"name": "python"
 			},
@@ -85,14 +38,13 @@
 				"endpoint": "https://saisynapsews.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/saisparkpoll",
 				"auth": {
 					"type": "AAD",
-					"authResource": "https://dev.azuresynapse.net",
-					"authHeader": null
+					"authResource": "https://dev.azuresynapse.net"
 				},
 				"sparkVersion": "3.5",
 				"nodeCount": 10,
 				"cores": 4,
 				"memory": 28,
-				"extraHeader": null
+				"automaticScaleJobs": false
 			},
 			"sessionKeepAliveTimeout": 30
 		},
