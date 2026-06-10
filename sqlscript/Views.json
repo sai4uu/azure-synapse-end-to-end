@@ -1,0 +1,17 @@
+{
+	"name": "Views",
+	"properties": {
+		"content": {
+			"query": "CREATE VIEW revenue_view\nAS\nSELECT\n*\nFROM\nOPENROWSET(\n     BULK 'revenue',\n    DATA_SOURCE = 'raw_ext_source',\n    FORMAT = 'CSV',\n    PARSER_VERSION = '2.0',\n    HEADER_ROW = TRUE\n    ) AS QUERY\n\n    select * from revenue_view",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "serverlessai",
+				"poolName": "Built-in"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

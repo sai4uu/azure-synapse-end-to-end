@@ -1,0 +1,17 @@
+{
+	"name": "openrowset",
+	"properties": {
+		"content": {
+			"query": "--CREATE CREDITENTIAL\n\nCREATE DATABASE SCOPED CREDENTIAL saicreds\n\nWITH\nIDENTITY = 'Managed Identity'\n\n---CREATE EXTERNAL SOURCE\n\nCREATE EXTERNAL DATA SOURCE raw_ext_source\n\nWITH\n(             \n    LOCATION = 'https://gen2datalake.dfs.core.windows.net/raw',\n    CREDENTIAL = saicreds\n)\n\n-----CREATE EXTERNAL FILE FORMAT \nCREATE EXTERNAL FILE FORMAT csv_formatt\nWITH (\n    FORMAT_TYPE = DELIMITEDTEXT,\n    FORMAT_OPTIONS (\n      FIELD_TERMINATOR = ',',\n      ENCODING = 'UTF8' )\n);\n----CREATE PARQET FORMAT \n\nCREATE EXTERNAL FILE FORMAT parquet_format\nWITH (  \n    FORMAT_TYPE = PARQUET, \n    DATA_COMPRESSION = 'org.apache.hadoop.io.compress.SnappyCodec'\n    );   \n\n\n---open row set\n\n select * from OPENROWSET(\n    BULK 'revenue2',\n    DATA_SOURCE = 'raw_ext_source',\n    FORMAT = 'CSV',\n    PARSER_VERSION = '2.0',\n    HEADER_ROW = TRUE\n    ) AS QUERY\n\n",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "serverlessai",
+				"poolName": "Built-in"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

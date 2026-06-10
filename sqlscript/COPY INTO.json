@@ -1,0 +1,17 @@
+{
+	"name": "COPY INTO",
+	"properties": {
+		"content": {
+			"query": "\nCREATE TABLE copy_into_table\n(\n   \n    Dealer_ID VARCHAR(4000) ,\n    Model_ID VARCHAR(4000),\n    Branch_ID VARCHAR(4000),\n    Date_ID VARCHAR(4000),\n    Units_Sold BIGINT,\n    Revenue BIGINT\n)\nWITH\n(\n    DISTRIBUTION = ROUND_ROBIN\n); \n--load data\nCOPY into copy_into_table\n(\n    Dealer_ID 1,\n    Model_ID 3,\n    Branch_ID 2,\n    Date_ID 4,\n    Units_Sold 5,\n    Revenue 6\n)\nFROM 'https://gen2datalake.dfs.core.windows.net/raw/cetass_revenue/'\nWITH\n(\nFILE_TYPE = 'PARQUET',\nCREDENTIAL = (IDENTITY = 'Managed Identity')\n)\n\n\nSELECT * from copy_into_table;\n",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "saidedicatedpool",
+				"poolName": "saidedicatedpool"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

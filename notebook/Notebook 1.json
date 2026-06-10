@@ -1,0 +1,312 @@
+{
+	"name": "Notebook 1",
+	"properties": {
+		"nbformat": 4,
+		"nbformat_minor": 2,
+		"bigDataPool": {
+			"referenceName": "saisparkpoll",
+			"type": "BigDataPoolReference"
+		},
+		"sessionProperties": {
+			"driverMemory": "28g",
+			"driverCores": 4,
+			"executorMemory": "28g",
+			"executorCores": 4,
+			"numExecutors": 2,
+			"runAsWorkspaceSystemIdentity": false,
+			"conf": {
+				"spark.dynamicAllocation.enabled": "false",
+				"spark.dynamicAllocation.minExecutors": "2",
+				"spark.dynamicAllocation.maxExecutors": "2",
+				"spark.autotune.trackingId": "78f43d2a-204a-4540-a5cc-466965570583"
+			}
+		},
+		"metadata": {
+			"saveOutput": true,
+			"synapse_widget": {
+				"version": "0.1",
+				"state": {
+					"b3a625b8-8149-427b-82e0-d1f38050a03e": {
+						"type": "Synapse.DataFrame",
+						"sync_state": {
+							"table": {
+								"rows": [
+									{
+										"0": {
+											"_FileInfo__j_file_info": null
+										}
+									},
+									{
+										"0": {
+											"_FileInfo__j_file_info": null
+										}
+									}
+								],
+								"schema": [
+									{
+										"key": "0",
+										"name": "0",
+										"type": "string"
+									}
+								],
+								"truncated": false
+							},
+							"isSummary": false,
+							"language": "python",
+							"wranglerEntryContext": null
+						},
+						"persist_state": {
+							"view": {
+								"type": "details",
+								"chartOptions": {
+									"chartType": "bar",
+									"aggregationType": "count",
+									"categoryFieldKeys": [
+										"0"
+									],
+									"seriesFieldKeys": [
+										"0"
+									],
+									"isStacked": false
+								}
+							}
+						}
+					}
+				}
+			},
+			"enableDebugMode": false,
+			"language_info": {
+				"name": "python"
+			},
+			"a365ComputeOptions": {
+				"id": "/subscriptions/59bc9c0c-f129-4e0e-ac63-c5a4d9e8f98b/resourceGroups/rg-synapse/providers/Microsoft.Synapse/workspaces/saisynapsews/bigDataPools/saisparkpoll",
+				"name": "saisparkpoll",
+				"type": "Spark",
+				"endpoint": "https://saisynapsews.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/saisparkpoll",
+				"auth": {
+					"type": "AAD",
+					"authResource": "https://dev.azuresynapse.net",
+					"authHeader": null
+				},
+				"sparkVersion": "3.5",
+				"nodeCount": 10,
+				"cores": 4,
+				"memory": 28,
+				"extraHeader": null
+			},
+			"sessionKeepAliveTimeout": 30
+		},
+		"cells": [
+			{
+				"cell_type": "code",
+				"source": [
+					"print('helloworld')"
+				],
+				"execution_count": 5
+			},
+			{
+				"cell_type": "code",
+				"source": [
+					"data = [\n",
+					"    (1, \"Sai\", 50000),\n",
+					"    (2, \"Kumar\", 60000),\n",
+					"    (3, \"Ravi\", 70000)\n",
+					"]\n",
+					"\n",
+					"df = spark.createDataFrame(data, [\"id\", \"name\", \"salary\"])\n",
+					"\n",
+					"df.show()"
+				],
+				"execution_count": 2
+			},
+			{
+				"cell_type": "code",
+				"source": [
+					"df = spark.read.option(\"header\", \"true\") \\\n",
+					"               .option(\"inferSchema\", \"true\") \\\n",
+					"               .csv(\"abfss://raw@gen2datalake.dfs.core.windows.net/revenue/*.csv\")\n",
+					"\n",
+					"df.show(10)"
+				],
+				"execution_count": 7
+			},
+			{
+				"cell_type": "code",
+				"source": [
+					"df = spark.read.option(\"header\", \"true\") \\\n",
+					"               .option(\"inferSchema\", \"true\") \\\n",
+					"               .csv(\"abfss://raw@gen2datalake.dfs.core.windows.net/revenue/*.csv\")\n",
+					"\n",
+					"df.show()"
+				],
+				"execution_count": 8
+			},
+			{
+				"cell_type": "code",
+				"source": [
+					"df.printSchema()"
+				],
+				"execution_count": 9
+			},
+			{
+				"cell_type": "code",
+				"source": [
+					"df.count()"
+				],
+				"execution_count": 10
+			},
+			{
+				"cell_type": "code",
+				"source": [
+					"df.createOrReplaceTempView(\"revenue\")"
+				],
+				"execution_count": 11
+			},
+			{
+				"cell_type": "code",
+				"source": [
+					"spark"
+				],
+				"execution_count": 12
+			},
+			{
+				"cell_type": "code",
+				"source": [
+					"spark.sql(\"\"\"\n",
+					"SELECT Dealer_ID, SUM(Revenue) AS total_revenue\n",
+					"FROM revenue\n",
+					"GROUP BY Dealer_ID\n",
+					"\"\"\").show()"
+				],
+				"execution_count": 14
+			},
+			{
+				"cell_type": "code",
+				"source": [
+					"df.write.mode(\"overwrite\").format(\"delta\").saveAsTable(\"revenue_tbl\")"
+				],
+				"execution_count": 15
+			},
+			{
+				"cell_type": "code",
+				"source": [
+					"spark.sql(\"SELECT * FROM revenue_tbl\").show()"
+				],
+				"execution_count": 16
+			},
+			{
+				"cell_type": "code",
+				"source": [
+					"spark.sql(\"SHOW TABLES\").show()"
+				],
+				"execution_count": 17
+			},
+			{
+				"cell_type": "code",
+				"source": [
+					"spark.sql(\"DESCRIBE EXTENDED revenue_tbl\").show(truncate=False)"
+				],
+				"execution_count": 18
+			},
+			{
+				"cell_type": "code",
+				"source": [
+					"spark.sql(\"DESCRIBE FORMATTED revenue_tbl\").show(truncate=False)"
+				],
+				"execution_count": 20
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"collapsed": false
+				},
+				"source": [
+					"files = mssparkutils.fs.ls(\n",
+					"    \"abfss://mansfsssynapse@mgstoragesynapgen2.dfs.core.windows.net/synapse/workspaces/saisynapsews/warehouse/revenue_tbl\"\n",
+					")\n",
+					"\n",
+					"for f in files:\n",
+					"    print(f.name, f.path)"
+				],
+				"execution_count": 30
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"collapsed": false
+				},
+				"source": [
+					"display(files)"
+				],
+				"execution_count": 31
+			},
+			{
+				"cell_type": "code",
+				"source": [
+					"from notebookutils import mssparkutils"
+				],
+				"execution_count": 32
+			},
+			{
+				"cell_type": "code",
+				"source": [
+					"mssparkutils.fs.ls(\"/\")"
+				],
+				"execution_count": 33
+			},
+			{
+				"cell_type": "code",
+				"source": [
+					"files = mssparkutils.fs.ls(\n",
+					"    \"abfss://raw@gen2datalake.dfs.core.windows.net/revenue\"\n",
+					")\n",
+					"\n",
+					"for f in files:\n",
+					"    print(f.name)"
+				],
+				"execution_count": 34
+			},
+			{
+				"cell_type": "code",
+				"source": [
+					"content = mssparkutils.fs.head(\n",
+					"    \"abfss://raw@gen2datalake.dfs.core.windows.net/revenue/revenue_star.csv\"\n",
+					")\n",
+					"\n",
+					"print(content)"
+				],
+				"execution_count": 36
+			},
+			{
+				"cell_type": "code",
+				"source": [
+					"mssparkutils.fs.mkdirs(\n",
+					"    \"abfss://raw@gen2datalake.dfs.core.windows.net/testfolder\"\n",
+					")"
+				],
+				"execution_count": 37
+			},
+			{
+				"cell_type": "code",
+				"source": [
+					"mssparkutils.fs.exists(\n",
+					"    \"abfss://raw@gen2datalake.dfs.core.windows.net/revenue\"\n",
+					")"
+				],
+				"execution_count": 38
+			},
+			{
+				"cell_type": "code",
+				"source": [
+					"if mssparkutils.fs.exists(\n",
+					"    \"abfss://raw@gen2datalake.dfs.core.windows.net/revenue\"\n",
+					"):\n",
+					"    print(\"Folder Exists\")\n",
+					"else:\n",
+					"    print(\"Folder Not Found\")"
+				],
+				"execution_count": 41
+			}
+		]
+	}
+}
