@@ -1,0 +1,24 @@
+{
+	"name": "DestinationDataset_qhx",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_src_gen2",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "revenueoutput",
+				"folderPath": "output",
+				"fileSystem": "raw"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": []
+	}
+}
