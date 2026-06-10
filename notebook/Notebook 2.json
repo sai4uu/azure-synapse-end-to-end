@@ -21,15 +21,16 @@
 				"spark.dynamicAllocation.enabled": "false",
 				"spark.dynamicAllocation.minExecutors": "2",
 				"spark.dynamicAllocation.maxExecutors": "2",
-				"spark.autotune.trackingId": "f87cd441-d957-402a-a6a5-94cc0a2e78a8"
+				"spark.autotune.trackingId": "42eea4e7-d5b8-4700-895d-340e4dd47e4d"
 			}
 		},
 		"metadata": {
 			"saveOutput": true,
-			"synapse_widget": {
-				"version": "0.1"
-			},
 			"enableDebugMode": false,
+			"kernelspec": {
+				"name": "synapse_pyspark",
+				"display_name": "Synapse PySpark"
+			},
 			"language_info": {
 				"name": "python"
 			},
@@ -40,14 +41,13 @@
 				"endpoint": "https://saisynapsews.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/saisparkpoll",
 				"auth": {
 					"type": "AAD",
-					"authResource": "https://dev.azuresynapse.net",
-					"authHeader": null
+					"authResource": "https://dev.azuresynapse.net"
 				},
 				"sparkVersion": "3.5",
 				"nodeCount": 10,
 				"cores": 4,
 				"memory": 28,
-				"extraHeader": null
+				"automaticScaleJobs": false
 			},
 			"sessionKeepAliveTimeout": 30
 		},
@@ -63,7 +63,8 @@
 				"source": [
 					"from notebookutils import mssparkutils\n",
 					""
-				]
+				],
+				"execution_count": null
 			}
 		]
 	}
